@@ -1,0 +1,11 @@
+[{"id":"1","name":"customer1","availableFunds":1000,"type" : "NORMAL"},
+ {"id":"2","name":"customer2","availableFunds":5000,"type" : "VIP"},
+ {"id":"3","name":"customer3","availableFunds":1000,"type" : "NORMAL"},
+ {"id":"4","name":"customer4","availableFunds":5000,"type" : "VIP"},
+ {"id":"5","name":"customer5","availableFunds":1000,"type" : "NORMAL"},
+ {"id":"6","name":"customer6","availableFunds":5000,"type" : "VIP"},
+ {"id":"7","name":"customer7","availableFunds":1000,"type" : "NORMAL"},
+ {"id":"8","name":"customer8","availableFunds":5000,"type" : "VIP"},
+ {"id":"9","name":"customer9","availableFunds":1000,"type" : "NORMAL"},
+ {"id":"10","name":"customer10","availableFunds":5000,"type" : "VIP"}
+]
