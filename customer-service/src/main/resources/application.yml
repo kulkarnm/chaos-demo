@@ -27,12 +27,20 @@ chaos:
     watcher:
       repository: true
       restController: true
-      
+
 management:
   endpoint:
     chaosmonkey:
+      enabled: true
+    metrics:
+      enabled: true
+    prometheus:
       enabled: true
   endpoints:
     web:
       exposure:
         include: health,info,chaosmonkey
+  metrics:
+    export:
+      prometheus:
+        enabled: true
