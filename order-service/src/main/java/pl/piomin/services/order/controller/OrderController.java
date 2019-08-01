@@ -2,7 +2,10 @@ package pl.piomin.services.order.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +38,9 @@ public class OrderController {
 		Product product = productClient.findById(order.getProductId());
 		Customer customer = customerClient.findById(order.getCustomerId());
 		int totalPrice = order.getProductsCount() * product.getPrice();
+		order.setId(UUID.randomUUID().hashCode());
 		if (customer != null && customer.getAvailableFunds() >= totalPrice && product.getCount() >= order.getProductsCount()) {
+
 			order.setPrice(totalPrice);
 			order.setStatus(OrderStatus.ACCEPTED);
 			product.setCount(product.getCount() - order.getProductsCount());

@@ -11,18 +11,18 @@ import scala.util.Random
 
 class ApiGatlingSimulationTest extends Simulation {
 
-  val scn = scenario("AddAndFindOrders").repeat(500, "n") {
+  val scn = scenario("AddAndFindOrders").repeat(2, "n") {
         exec(
           http("AddOrder-API")
             .post("http://localhost:8091/order-service/orders")
             .header("Content-Type", "application/json")
-            .body(StringBody("""{"productId":""" + Random.nextInt(1) + ""","customerId":""" + Random.nextInt(1) + ""","productsCount":1,"price":1000,"status":"NEW"}"""))
-            .check(status.is(200),  jsonPath("$.id").saveAs("orderId"))
+            .body(StringBody("""{"productId":""" + 1 + ""","customerId":""" + 1 + ""","productsCount":1,"price":1000,"status":"NEW"}"""))
+            .check(status.is(200),  jsonPath("$.id").saveAs("id"))
         ).pause(Duration.apply(5, TimeUnit.MILLISECONDS))    
         .
         exec(
           http("GetOrder-API")
-            .get("http://localhost:8091/order-service/orders/${orderId}")
+            .get("http://localhost:8091/order-service/orders/${id}")
             .check(status.is(200))
         )   
   }

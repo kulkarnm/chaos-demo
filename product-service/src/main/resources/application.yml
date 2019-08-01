@@ -16,13 +16,13 @@ eureka:
       
 chaos:
   monkey:
-    enabled: true
+    enabled: false
     assaults:
       level: 7
       latencyRangeStart: 1000
       latencyRangeEnd: 10000
       exceptionsActive: false
-      killApplicationActive: true
+      killApplicationActive: false
     watcher:
       repository: true
       restController: true

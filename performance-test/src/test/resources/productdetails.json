@@ -1,11 +1,11 @@
-[{"id":"1","name":"productName1","count":10,"price" : 100 , "category" : "ELECTRONICS"},
- {"id":"2","name":"productName2","count":20,"price" : 200 , "category" : "ELECTRONICS"},
- {"id":"3","name":"productName3","count":30,"price" : 100 , "category" : "ELECTRONICS"},
- {"id":"4","name":"productName4","count":40,"price" : 200 , "category" : "ELECTRONICS"},
- {"id":"5","name":"productName5","count":50,"price" : 100 , "category" : "ELECTRONICS"},
- {"id":"6","name":"productName6","count":60,"price" : 200 , "category" : "ELECTRONICS"},
- {"id":"7","name":"productName7","count":70,"price" : 100 , "category" : "ELECTRONICS"},
- {"id":"8","name":"productName8","count":80,"price" : 200 , "category" : "ELECTRONICS"},
- {"id":"9","name":"productName9","count":90,"price" : 100 , "category" : "ELECTRONICS"},
- {"id":"10","name":"productName10","count":100,"price" : 200 , "category" : "ELECTRONICS"}
+[{"id":"1","name":"productName1","count":1000,"price" : 100 , "category" : "ELECTRONICS"},
+ {"id":"2","name":"productName2","count":2000,"price" : 200 , "category" : "ELECTRONICS"},
+ {"id":"3","name":"productName3","count":3000,"price" : 100 , "category" : "ELECTRONICS"},
+ {"id":"4","name":"productName4","count":4000,"price" : 200 , "category" : "ELECTRONICS"},
+ {"id":"5","name":"productName5","count":5000,"price" : 100 , "category" : "ELECTRONICS"},
+ {"id":"6","name":"productName6","count":6000,"price" : 200 , "category" : "ELECTRONICS"},
+ {"id":"7","name":"productName7","count":7000,"price" : 100 , "category" : "ELECTRONICS"},
+ {"id":"8","name":"productName8","count":8000,"price" : 200 , "category" : "ELECTRONICS"},
+ {"id":"9","name":"productName9","count":9000,"price" : 100 , "category" : "ELECTRONICS"},
+ {"id":"10","name":"productName10","count":10000,"price" : 200 , "category" : "ELECTRONICS"}
 ]

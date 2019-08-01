@@ -10,19 +10,14 @@ import java.util.concurrent.TimeUnit
 import scala.util.Random
 
 class Customer extends Simulation {
-  var scn = scenario("Insert Customer").repeat(2, "n") {
-    exec(RegisterCustomer.registerCustomer).pause(10)
-      .check(status.is(200), jsonPath("$.id").saveAs("customerId"))
-  }
+  var scn = scenario("Insert Customer").exec(RegisterCustomer.registerCustomer).pause(10)
   setUp(scn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object RegisterCustomer {
 
   val createCustomerUrl = "http://localhost:8093/customers"
-
-
-  val customerDetailsJsonFeeder = jsonFile("customerdetails.json")
+  val customerDetailsJsonFeeder = jsonFile("customerdetails.json").circular
 
   val registerCustomer = feed(customerDetailsJsonFeeder)
     .exec(
@@ -36,11 +31,11 @@ object RegisterCustomer {
               |    "id":"${id}",
               |    "name":"${name}",
               |    "availableFunds":"${availableFunds}",
-              |    "type":"${type}",
+              |    "type":"${type}"
               |}
             """.stripMargin
           )
         ).asJSON
-      //.check(jsonPath("$.productId").saveAs("productId"))
+        .check(status.is(200), jsonPath("$.id").saveAs("customerId"))
     )
 }
