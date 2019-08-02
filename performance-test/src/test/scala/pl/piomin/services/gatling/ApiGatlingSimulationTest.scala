@@ -11,7 +11,7 @@ import scala.util.Random
 
 class ApiGatlingSimulationTest extends Simulation {
 
-  val scn = scenario("AddAndFindOrders").repeat(2, "n") {
+  val scn = scenario("AddAndFindOrders").repeat(100, "n") {
         exec(
           http("AddOrder-API")
             .post("http://localhost:8091/order-service/orders")
