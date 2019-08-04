@@ -34,7 +34,7 @@ public class CustomActuatorMetricService implements ICustomActuatorMetricService
 
     @Override
     public void increaseCount(final int status) {
-        String counterName = "chaosdemo.response.status.counter.status." + status;
+        String counterName = "counter.status." + status;
         registry.counter(counterName).increment(1);
         if (!statusList.contains(counterName)) {
             statusList.add(counterName);

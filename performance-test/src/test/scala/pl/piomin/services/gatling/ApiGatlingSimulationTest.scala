@@ -14,7 +14,7 @@ class ApiGatlingSimulationTest extends Simulation {
   val scn = scenario("AddAndFindOrders").repeat(100, "n") {
         exec(
           http("AddOrder-API")
-            .post("http://localhost:8091/order-service/orders")
+            .post("http://localhost:8090/order-service/orders")
             .header("Content-Type", "application/json")
             .body(StringBody("""{"productId":""" + 1 + ""","customerId":""" + 1 + ""","productsCount":1,"price":1000,"status":"NEW"}"""))
             .check(status.is(200),  jsonPath("$.id").saveAs("id"))

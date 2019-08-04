@@ -72,7 +72,6 @@ public class ActuatorMetricService implements IActuatorMetricService {
         for (final Meter counterMetric : publicMetrics.getMeters()) {
             updateMetrics(counterMetric, lastMinuteStatuses);
         }
-
         statusMetricsByMinute.add(lastMinuteStatuses);
     }
 
@@ -89,7 +88,7 @@ public class ActuatorMetricService implements IActuatorMetricService {
         int index = -1;
         int oldCount = 0;
 
-        if (counterMetric.getId().getName().contains("chaosdemo.response.status.counter.status.")) {
+        if (counterMetric.getId().getName().contains("counter.status.")) {
             status = counterMetric.getId().getName().substring(15, 18); // example 404, 200
             appendStatusIfNotExist(status, statusCount);
             index = statusList.indexOf(status);

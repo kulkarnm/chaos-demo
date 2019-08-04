@@ -32,6 +32,7 @@ public class MetricsFilter implements Filter {
 
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws java.io.IOException, ServletException {
+        System.out.println("#######IN Filter");
         final HttpServletRequest httpRequest = ((HttpServletRequest) request);
         final String req = httpRequest.getMethod() + " " + httpRequest.getRequestURI();
 

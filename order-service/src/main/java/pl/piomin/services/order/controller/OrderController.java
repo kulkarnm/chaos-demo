@@ -37,6 +37,7 @@ public class OrderController {
 	
 	@PostMapping
 	public Order add(@RequestBody Order order) {
+		System.out.println("@@@@@IN order service add method");
 		Product product = productClient.findById(order.getProductId());
 		Customer customer = customerClient.findById(order.getCustomerId());
 		int totalPrice = order.getProductsCount() * product.getPrice();
