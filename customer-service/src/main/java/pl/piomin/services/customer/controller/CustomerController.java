@@ -1,5 +1,6 @@
 package pl.piomin.services.customer.controller;
 
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import pl.piomin.services.customer.repository.CustomerRepository;
 
 @RestController
 @RequestMapping("/customers")
+@Timed ( value = "Customer" )
 public class CustomerController {
 
 	@Autowired

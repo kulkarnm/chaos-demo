@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import pl.piomin.services.order.repository.OrderRepository;
 
 @RestController
 @RequestMapping("/orders")
+@Timed( value= "Order")
 public class OrderController {
 
 	@Autowired
