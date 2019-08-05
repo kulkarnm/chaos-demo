@@ -1,6 +1,4 @@
-package com.cheosdemo.metrics.filter;
-
-import java.util.Map;
+package com.chaosdemo.metrics.impl;
 
 public interface ICustomActuatorMetricService {
         void increaseCount(final int status);

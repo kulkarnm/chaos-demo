@@ -1,12 +1,14 @@
 package com.chaosdemo.product.config;
 
-import com.cheosdemo.metrics.filter.MetricsFilter;
+import com.chaosdemo.metrics.filter.MetricsFilter;
 import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.core.MongoTemplate;
 @org.springframework.context.annotation.Configuration
+@ComponentScan(basePackages ={"com.chaosdemo.metrics.impl","com.chaosdemo.metrics.filter","com.chaosdemo.product"})
 public class Configuration {
     @Bean
     public MongoTemplate mongoTemplate(MongoClient mongoClient) {

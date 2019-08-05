@@ -1,4 +1,4 @@
-package com.cheosdemo.metrics.filter;
+package com.chaosdemo.metrics.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.text.SimpleDateFormat;
@@ -6,11 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.search.Search;
 

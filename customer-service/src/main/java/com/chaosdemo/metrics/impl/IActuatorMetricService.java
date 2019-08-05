@@ -1,4 +1,4 @@
-package com.cheosdemo.metrics.filter;
+package com.chaosdemo.metrics.impl;
 
 public interface IActuatorMetricService {
     Object[][] getGraphData();

@@ -1,4 +1,4 @@
-package com.cheosdemo.metrics.filter;
+package com.chaosdemo.metrics.filter;
 
 import com.chaosdemo.metrics.impl.CustomActuatorMetricService;
 import com.chaosdemo.metrics.impl.ICustomActuatorMetricService;
