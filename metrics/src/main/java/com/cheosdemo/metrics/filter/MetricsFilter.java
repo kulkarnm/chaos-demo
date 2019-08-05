@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 @WebFilter
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(2)
 public class MetricsFilter implements Filter {
     @Autowired
     private IMetricService metricService;
@@ -25,7 +25,7 @@ public class MetricsFilter implements Filter {
     @Override
     public void init(final FilterConfig config) throws ServletException {
         if (metricService == null || actMetricService == null) {
-            metricService = (IMetricService) WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext()).getBean("metricService");
+            metricService = (IMetricService) WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext()).getBean(MetricService.class);
             actMetricService = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext()).getBean(CustomActuatorMetricService.class);
         }
     }
