@@ -10,19 +10,47 @@ import java.util.concurrent.TimeUnit
 import scala.util.Random
 
 class Customer extends Simulation {
-  var scn = scenario("Insert Customer").exec(RegisterCustomer.registerCustomer).pause(10)
-  setUp(scn.inject(atOnceUsers(1)).protocols(http))
+  var customerscn = scenario("Insert Customer").exec(RegisterCustomer.registerCustomer).pause(30)
+  var customerODSscn = scenario("Insert Customer ODS").exec(RegisterCustomerODS.registerCustomerODS).pause(30)
+  setUp(customerscn.inject(atOnceUsers(1)).protocols(http),customerODSscn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object RegisterCustomer {
 
   val createCustomerUrl = "http://localhost:8093/customers"
-  val customerDetailsJsonFeeder = jsonFile("customerdetails.json").circular
+  val customerDetailsJsonFeeder = jsonFile("customerdetails.json")
+
 
   val registerCustomer = feed(customerDetailsJsonFeeder)
     .exec(
       http("Insert Customer")
         .post(createCustomerUrl)
+        .header("Content-Type", "application/json")
+        .body(
+          StringBody(
+            """
+              |{
+              |    "id":"${id}",
+              |    "name":"${name}",
+              |    "availableFunds":"${availableFunds}",
+              |    "type":"${type}"
+              |}
+            """.stripMargin
+          )
+        ).asJSON
+        .check(status.is(200), jsonPath("$.id").saveAs("customerId"))
+    )
+}
+object RegisterCustomerODS {
+
+  val createCustomerODSUrl = "http://localhost:8094/odscustomers"
+  val customerDetailsJsonFeeder = jsonFile("customerdetails.json")
+
+
+  val registerCustomerODS = feed(customerDetailsJsonFeeder)
+    .exec(
+      http("Insert Customer ODS")
+        .post(createCustomerODSUrl)
         .header("Content-Type", "application/json")
         .body(
           StringBody(

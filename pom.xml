@@ -12,7 +12,8 @@
 		<module>customer-service</module>
 		<module>discovery-service</module>
 		<module>gateway-service</module>
-	</modules>
+        <module>odssimulation</module>
+    </modules>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.data</groupId>

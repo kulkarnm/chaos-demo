@@ -10,14 +10,14 @@ import java.util.concurrent.TimeUnit
 import scala.util.Random
 
 class Product extends Simulation {
-  var scn = scenario("Insert Product").exec(RegisterProduct.registerProduct).pause(10)
-  setUp(scn.inject(atOnceUsers(1)).protocols(http))
+  var productscn = scenario("Insert Product").exec(RegisterProduct.registerProduct).pause(30)
+  var productODSscn = scenario("Insert Product ODS").exec(RegisterProductODS.registerProductODS).pause(30)
+  setUp(productscn.inject(atOnceUsers(1)).protocols(http),productODSscn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object RegisterProduct {
 
   val createProductUrl = "http://localhost:8092/products"
-
 
   val productDetailsJsonFeeder = jsonFile("productdetails.json").circular
 
@@ -25,6 +25,34 @@ object RegisterProduct {
     .exec(
       http("Insert Product")
         .post(createProductUrl)
+        .header("Content-Type", "application/json")
+        .body(
+          StringBody(
+            """
+              |{
+              |    "id":"${id}",
+              |    "name":"${name}",
+              |    "count":"${count}",
+              |    "price":"${price}",
+              |    "category":"${category}"
+              |}
+            """.stripMargin
+          )
+        ).asJSON
+        .check(status.is(200), jsonPath("$.id").saveAs("productId"))
+    )
+}
+
+object RegisterProductODS {
+
+  val createProductODSUrl = "http://localhost:8094/odsproducts"
+
+  val productDetailsJsonFeeder = jsonFile("productdetails.json").circular
+
+  val registerProductODS = feed(productDetailsJsonFeeder)
+    .exec(
+      http("Insert Product ODS")
+        .post(createProductODSUrl)
         .header("Content-Type", "application/json")
         .body(
           StringBody(
