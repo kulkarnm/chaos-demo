@@ -4,6 +4,8 @@ import com.chaosdemo.ods.simulation.model.Customer;
 import com.chaosdemo.ods.simulation.repository.CustomerRepository;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,5 +30,6 @@ public class CustomerODSController {
     public Customer findById(@PathVariable("id") Integer id) {
         return repository.findById(id).get();
     }
+
 
 } 

@@ -1,5 +1,6 @@
 package com.chaosdemo.customer.controller;
 
+import com.chaosdemo.feignclient.ODSCustomerClient;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,21 +20,21 @@ import com.chaosdemo.customer.repository.CustomerRepository;
 public class CustomerController {
 
 	@Autowired
-	CustomerRepository repository;
-	
+	ODSCustomerClient odsCustomerClient;
+
 	@PostMapping
 	public Customer add(@RequestBody Customer customer) {
-		return repository.save(customer);
+		return odsCustomerClient.add(customer);
 	}
 	
 	@PutMapping
 	public Customer update(@RequestBody Customer customer) {
-		return repository.save(customer);
+		return odsCustomerClient.update(customer);
 	}
 	
 	@GetMapping("/{id}")
 	public Customer findById(@PathVariable("id") Integer id) {
-		return repository.findById(id).get();
+		return odsCustomerClient.findById(id);
 	}
 	
 }

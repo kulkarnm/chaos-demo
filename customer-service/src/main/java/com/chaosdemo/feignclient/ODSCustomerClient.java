@@ -4,7 +4,7 @@ import com.chaosdemo.customer.model.Customer;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "ods-simulation-service")
+@FeignClient(name = "ods-simulation-service",fallback = ODSCustomerClientFallback.class)
 public interface ODSCustomerClient {
     @PostMapping("/customers")
     public Customer add(@RequestBody Customer customer);

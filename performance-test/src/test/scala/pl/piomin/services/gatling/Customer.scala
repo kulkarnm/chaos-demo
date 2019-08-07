@@ -18,33 +18,29 @@ class Customer extends Simulation {
 object RegisterCustomer {
 
   val createCustomerUrl = "http://localhost:8093/customers"
-  val customerDetailsJsonFeeder = jsonFile("customerdetails.json")
+  val customerDetailsJsonFeeder = jsonFile("customerdetails.json").circular
+  val insertCustomer = http("Insert Customer")
+    .post(createCustomerUrl)
+    .header("Content-Type", "application/json")
+    .header("Accept", "application/json")
+    .body(
+      StringBody(
+        """{
+                  "id":${id},
+                  "name":"${name}",
+                  "availableFunds":${availableFunds},
+                  "type":"${type}"
+              }""")).asJSON
+    .check(status.is(200), jsonPath("$.id").saveAs("customer"))
 
 
-  val registerCustomer = feed(customerDetailsJsonFeeder)
-    .exec(
-      http("Insert Customer")
-        .post(createCustomerUrl)
-        .header("Content-Type", "application/json")
-        .body(
-          StringBody(
-            """
-              |{
-              |    "id":"${id}",
-              |    "name":"${name}",
-              |    "availableFunds":"${availableFunds}",
-              |    "type":"${type}"
-              |}
-            """.stripMargin
-          )
-        ).asJSON
-        .check(status.is(200), jsonPath("$.id").saveAs("customerId"))
-    )
+  val registerCustomer = scenario("Register Customer Feed").feed(RegisterCustomer.customerDetailsJsonFeeder)
+    .exec(RegisterCustomer.insertCustomer).exitHereIfFailed
 }
 object RegisterCustomerODS {
 
   val createCustomerODSUrl = "http://localhost:8094/odscustomers"
-  val customerDetailsJsonFeeder = jsonFile("customerdetails.json")
+  val customerDetailsJsonFeeder = jsonFile("customerdetails.json").circular
 
 
   val registerCustomerODS = feed(customerDetailsJsonFeeder)
@@ -56,14 +52,14 @@ object RegisterCustomerODS {
           StringBody(
             """
               |{
-              |    "id":"${id}",
+              |    "id":${id},
               |    "name":"${name}",
-              |    "availableFunds":"${availableFunds}",
+              |    "availableFunds":${availableFunds},
               |    "type":"${type}"
               |}
             """.stripMargin
           )
         ).asJSON
-        .check(status.is(200), jsonPath("$.id").saveAs("customerId"))
+        .check(status.is(200), jsonPath("$.id").saveAs("customerODS"))
     )
 }
