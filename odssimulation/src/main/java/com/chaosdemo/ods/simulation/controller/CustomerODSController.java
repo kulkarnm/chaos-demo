@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/odscustomers")
+@RequestMapping("/customers")
 @Timed( value = "OdsCustomers" )
 public class CustomerODSController {
 
@@ -28,6 +28,7 @@ public class CustomerODSController {
 
     @GetMapping("/{id}")
     public Customer findById(@PathVariable("id") Integer id) {
+        System.out.println("CustomerODSController--findById");
         return repository.findById(id).get();
     }
 

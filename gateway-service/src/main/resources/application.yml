@@ -23,6 +23,6 @@ hystrix:
           thread:
             timeoutInMilliseconds: 15000
       fallback:
-        enabled: false
+        enabled: true
       circuitBreaker:
-        enabled: false
+        enabled: true
