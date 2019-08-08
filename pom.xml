@@ -12,7 +12,7 @@
 		<module>customer-service</module>
 		<module>discovery-service</module>
 		<module>gateway-service</module>
-        <module>odssimulation</module>
+        <module>ods-simulation</module>
     </modules>
 	<dependencies>
 		<dependency>
