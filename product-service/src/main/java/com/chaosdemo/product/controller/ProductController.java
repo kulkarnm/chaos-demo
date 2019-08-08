@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chaosdemo.product.repository.ProductRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/products")
 @Timed ( value= "Product")
@@ -22,8 +25,9 @@ public class ProductController {
 	ProductRepository repository;
 	
 	@PostMapping
-	public Product add(@RequestBody Product product) {
-		return repository.save(product);
+	public List<Product> add(@RequestBody List<Product> products) {
+		return products.stream().map(
+				product -> repository.save(product)).collect(Collectors.toList());
 	}
 	
 	@PutMapping

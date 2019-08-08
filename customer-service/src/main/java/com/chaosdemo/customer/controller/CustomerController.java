@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.chaosdemo.customer.model.Customer;
 import com.chaosdemo.customer.repository.CustomerRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/customers")
 @Timed ( value = "Customer" )
@@ -23,8 +26,9 @@ public class CustomerController {
 	ODSCustomerClient odsCustomerClient;
 
 	@PostMapping
-	public Customer add(@RequestBody Customer customer) {
-		return odsCustomerClient.add(customer);
+	public List<Customer> add(@RequestBody List<Customer> customers) {
+		return customers.stream().map(
+				customer -> odsCustomerClient.add(customer)).collect(Collectors.toList());
 	}
 	
 	@PutMapping

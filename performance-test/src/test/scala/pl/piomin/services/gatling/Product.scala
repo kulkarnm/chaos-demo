@@ -21,24 +21,12 @@ object RegisterProduct {
 
   val productDetailsJsonFeeder = jsonFile("productdetails.json").circular
 
-  val registerProduct = feed(productDetailsJsonFeeder)
-    .exec(
+  val registerProduct = scenario("Register Product Feed").exec(
       http("Insert Product")
         .post(createProductUrl)
         .header("Content-Type", "application/json")
         .body(
-          StringBody(
-            """
-              |{
-              |    "id":"${id}",
-              |    "name":"${name}",
-              |    "count":"${count}",
-              |    "price":"${price}",
-              |    "category":"${category}"
-              |}
-            """.stripMargin
-          )
-        ).asJSON
+          RawFileBody("productdetails.json")).asJSON
         .check(status.is(200), jsonPath("$.id").saveAs("productId"))
     )
 }
@@ -49,23 +37,13 @@ object RegisterProductODS {
 
   val productDetailsJsonFeeder = jsonFile("productdetails.json").circular
 
-  val registerProductODS = feed(productDetailsJsonFeeder)
+  val registerProductODS = scenario("Register ODS Product Feed").
     .exec(
       http("Insert Product ODS")
         .post(createProductODSUrl)
         .header("Content-Type", "application/json")
         .body(
-          StringBody(
-            """
-              |{
-              |    "id":"${id}",
-              |    "name":"${name}",
-              |    "count":"${count}",
-              |    "price":"${price}",
-              |    "category":"${category}"
-              |}
-            """.stripMargin
-          )
+          RawFileBody("productdetails.json")
         ).asJSON
         .check(status.is(200), jsonPath("$.id").saveAs("productId"))
     )
