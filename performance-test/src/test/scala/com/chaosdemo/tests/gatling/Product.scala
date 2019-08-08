@@ -1,4 +1,4 @@
-package pl.piomin.services.gatling
+package com.chaosdemo.tests.gatling
 
 import io.gatling.core.scenario.Simulation
 import io.gatling.core.Predef._
@@ -21,12 +21,24 @@ object RegisterProduct {
 
   val productDetailsJsonFeeder = jsonFile("productdetails.json").circular
 
-  val registerProduct = scenario("Register Product Feed").exec(
+  val registerProduct = feed(productDetailsJsonFeeder)
+    .exec(
       http("Insert Product")
         .post(createProductUrl)
         .header("Content-Type", "application/json")
         .body(
-          RawFileBody("productdetails.json")).asJSON
+          StringBody(
+            """
+              |{
+              |    "id":"${id}",
+              |    "name":"${name}",
+              |    "count":"${count}",
+              |    "price":"${price}",
+              |    "category":"${category}"
+              |}
+            """.stripMargin
+          )
+        ).asJSON
         .check(status.is(200), jsonPath("$.id").saveAs("productId"))
     )
 }
@@ -37,13 +49,23 @@ object RegisterProductODS {
 
   val productDetailsJsonFeeder = jsonFile("productdetails.json").circular
 
-  val registerProductODS = scenario("Register ODS Product Feed").
+  val registerProductODS = feed(productDetailsJsonFeeder)
     .exec(
       http("Insert Product ODS")
         .post(createProductODSUrl)
         .header("Content-Type", "application/json")
         .body(
-          RawFileBody("productdetails.json")
+          StringBody(
+            """
+              |{
+              |    "id":"${id}",
+              |    "name":"${name}",
+              |    "count":"${count}",
+              |    "price":"${price}",
+              |    "category":"${category}"
+              |}
+            """.stripMargin
+          )
         ).asJSON
         .check(status.is(200), jsonPath("$.id").saveAs("productId"))
     )

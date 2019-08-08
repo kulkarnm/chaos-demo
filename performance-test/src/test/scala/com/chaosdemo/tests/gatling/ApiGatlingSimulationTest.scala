@@ -1,4 +1,4 @@
-package pl.piomin.services.gatling
+package com.chaosdemo.tests.gatling
 
 import io.gatling.core.scenario.Simulation
 import io.gatling.core.Predef._
@@ -8,9 +8,12 @@ import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.duration.Duration
 import java.util.concurrent.TimeUnit
 import scala.util.Random
+import java.math.BigInteger
+import java.util.concurrent.ThreadLocalRandom
 
 class ApiGatlingSimulationTest extends Simulation {
 
+/*
   val scn = scenario("AddAndFindOrders").repeat(100, "n") {
         exec(
           http("AddOrder-API")
@@ -28,5 +31,20 @@ class ApiGatlingSimulationTest extends Simulation {
   }
   
   setUp(scn.inject(atOnceUsers(20))).maxDuration(FiniteDuration.apply(10, "minutes"))
-  
+*/
+  val rnd = ThreadLocalRandom.current().nextInt(1,2)
+  val scn = scenario("ReadCustomers").repeat(20, "n") {
+    exec(
+      http("ReadCustomer-API")
+        .get("http://localhost:8090/customer-service/customers/" + rnd)
+        .check(status.is(200))
+    ).pause(Duration.apply(5, TimeUnit.MILLISECONDS))
+      .exec(
+          http("ReadProduct-API")
+            .get("http://localhost:8090/product-service/products/" + rnd)
+            .check(status.is(200))
+        )
+  }
+
+  setUp(scn.inject(atOnceUsers(20))).maxDuration(FiniteDuration.apply(10, "minutes"))
 }

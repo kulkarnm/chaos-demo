@@ -1,4 +1,4 @@
-package pl.piomin.services.gatling
+package com.chaosdemo.tests.gatling
 
 import io.gatling.core.scenario.Simulation
 import io.gatling.core.Predef._
@@ -24,12 +24,18 @@ object RegisterCustomer {
     .header("Content-Type", "application/json")
     .header("Accept", "application/json")
     .body(
-      RawFileBody("customerdetails.json")
-    ).asJSON
+      StringBody(
+        """{
+                  "id":${id},
+                  "name":"${name}",
+                  "availableFunds":${availableFunds},
+                  "type":"${type}"
+              }""")).asJSON
     .check(status.is(200), jsonPath("$.id").saveAs("customer"))
 
 
-  val registerCustomer = scenario("Register Customer Feed").exec(RegisterCustomer.insertCustomer).exitHereIfFailed
+  val registerCustomer = scenario("Register Customer Feed").feed(RegisterCustomer.customerDetailsJsonFeeder)
+    .exec(RegisterCustomer.insertCustomer).exitHereIfFailed
 }
 object RegisterCustomerODS {
 
@@ -37,12 +43,22 @@ object RegisterCustomerODS {
   val customerDetailsJsonFeeder = jsonFile("customerdetails.json").circular
 
 
-  val registerCustomerODS = scenario("Register ODS Customer Feed").exec(
+  val registerCustomerODS = feed(customerDetailsJsonFeeder)
+    .exec(
       http("Insert Customer ODS")
         .post(createCustomerODSUrl)
         .header("Content-Type", "application/json")
         .body(
-          RawFileBody("customerdetails.json")
+          StringBody(
+            """
+              |{
+              |    "id":${id},
+              |    "name":"${name}",
+              |    "availableFunds":${availableFunds},
+              |    "type":"${type}"
+              |}
+            """.stripMargin
+          )
         ).asJSON
         .check(status.is(200), jsonPath("$.id").saveAs("customerODS"))
     )
