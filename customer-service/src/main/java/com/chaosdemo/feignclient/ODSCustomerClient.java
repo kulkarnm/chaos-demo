@@ -32,7 +32,7 @@ public interface ODSCustomerClient {
 
         @GetMapping("/{id}")
         public Customer findById(@PathVariable("id") Integer id) {
-            System.out.println("CustomerODSController--findById");
+            System.out.println("Customer CHAOSDB--findById");
             return repository.findById(id).get();
         }
     }

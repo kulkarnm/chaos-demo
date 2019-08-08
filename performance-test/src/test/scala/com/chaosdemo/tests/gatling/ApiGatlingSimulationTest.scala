@@ -32,8 +32,8 @@ class ApiGatlingSimulationTest extends Simulation {
   
   setUp(scn.inject(atOnceUsers(20))).maxDuration(FiniteDuration.apply(10, "minutes"))
 */
-  val rnd = ThreadLocalRandom.current().nextInt(1,2)
-  val scn = scenario("ReadCustomers").repeat(20, "n") {
+  val rnd = ThreadLocalRandom.current().nextInt(1,9)
+  val scn = scenario("ReadCustomers").repeat(2000, "n") {
     exec(
       http("ReadCustomer-API")
         .get("http://localhost:8090/customer-service/customers/" + rnd)
