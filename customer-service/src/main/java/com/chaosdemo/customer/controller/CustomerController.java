@@ -26,9 +26,8 @@ public class CustomerController {
 	ODSCustomerClient odsCustomerClient;
 
 	@PostMapping
-	public List<Customer> add(@RequestBody List<Customer> customers) {
-		return customers.stream().map(
-				customer -> odsCustomerClient.add(customer)).collect(Collectors.toList());
+	public Customer add(@RequestBody Customer customer) {
+		return odsCustomerClient.add(customer);
 	}
 	
 	@PutMapping
