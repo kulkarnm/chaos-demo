@@ -39,7 +39,7 @@ object RegisterCustomer {
 }
 object RegisterCustomerODS {
 
-  val createCustomerODSUrl = "http://localhost:8094/odscustomers"
+  val createCustomerODSUrl = "http://localhost:8094/customers"
   val customerDetailsJsonFeeder = jsonFile("customerdetails.json").circular
 
 

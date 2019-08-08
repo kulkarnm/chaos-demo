@@ -24,6 +24,10 @@ feign:
   hystrix:
     enabled: true
 
+ribbon:
+  ConnectTimeout: 5000
+  ReadTimeout: 5000
+
 chaos:
   monkey:
     enabled: false

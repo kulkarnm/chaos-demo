@@ -45,7 +45,7 @@ object RegisterProduct {
 
 object RegisterProductODS {
 
-  val createProductODSUrl = "http://localhost:8094/odsproducts"
+  val createProductODSUrl = "http://localhost:8094/products"
 
   val productDetailsJsonFeeder = jsonFile("productdetails.json").circular
 
