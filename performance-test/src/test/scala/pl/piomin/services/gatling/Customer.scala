@@ -24,18 +24,12 @@ object RegisterCustomer {
     .header("Content-Type", "application/json")
     .header("Accept", "application/json")
     .body(
-      StringBody(
-        """{
-                  "id":${id},
-                  "name":"${name}",
-                  "availableFunds":${availableFunds},
-                  "type":"${type}"
-              }""")).asJSON
+      RawFileBody("customerdetails.json")
+    ).asJSON
     .check(status.is(200), jsonPath("$.id").saveAs("customer"))
 
 
-  val registerCustomer = scenario("Register Customer Feed").feed(RegisterCustomer.customerDetailsJsonFeeder)
-    .exec(RegisterCustomer.insertCustomer).exitHereIfFailed
+  val registerCustomer = scenario("Register Customer Feed").exec(RegisterCustomer.insertCustomer).exitHereIfFailed
 }
 object RegisterCustomerODS {
 
@@ -43,22 +37,12 @@ object RegisterCustomerODS {
   val customerDetailsJsonFeeder = jsonFile("customerdetails.json").circular
 
 
-  val registerCustomerODS = feed(customerDetailsJsonFeeder)
-    .exec(
+  val registerCustomerODS = scenario("Register ODS Customer Feed").exec(
       http("Insert Customer ODS")
         .post(createCustomerODSUrl)
         .header("Content-Type", "application/json")
         .body(
-          StringBody(
-            """
-              |{
-              |    "id":${id},
-              |    "name":"${name}",
-              |    "availableFunds":${availableFunds},
-              |    "type":"${type}"
-              |}
-            """.stripMargin
-          )
+          RawFileBody("customerdetails.json")
         ).asJSON
         .check(status.is(200), jsonPath("$.id").saveAs("customerODS"))
     )
