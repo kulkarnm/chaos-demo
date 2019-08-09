@@ -38,10 +38,12 @@ public class MetricsFilter implements Filter {
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws java.io.IOException, ServletException {
         final HttpServletRequest httpRequest = ((HttpServletRequest) request);
         actMetricService.increaseRequestCount();
+        long startTime = System.currentTimeMillis();
         chain.doFilter(request, response);
-
+        long endTime = System.currentTimeMillis();
         final int status = ((HttpServletResponse) response).getStatus();
         //metricService.increaseCount(req, status);
+        actMetricService.captureResponseTime(endTime-startTime);
         actMetricService.increaseStatusWideCount(status);
     }
 

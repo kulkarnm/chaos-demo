@@ -49,6 +49,13 @@ public class CustomActuatorMetricService implements ICustomActuatorMetricService
 */
     }
 
+    @Override
+    public void captureResponseTime(long responseTimeMilli) {
+        String counterName = "customer.counter.responsetime";
+        registry.counter(counterName).increment(responseTimeMilli);
+
+    }
+
 /*
     @Override
     public Object[][] getGraphData() {
