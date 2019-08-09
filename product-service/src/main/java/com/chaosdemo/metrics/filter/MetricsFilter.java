@@ -39,9 +39,11 @@ public class MetricsFilter implements Filter {
         final HttpServletRequest httpRequest = ((HttpServletRequest) request);
         actMetricService.increaseRequestCount();
         chain.doFilter(request, response);
-
+        final long startTime = System.currentTimeMillis();
         final int status = ((HttpServletResponse) response).getStatus();
         //metricService.increaseCount(req, status);
+        final long endTime = System.currentTimeMillis();
+        actMetricService.captureResponseTime(endTime-startTime);
         actMetricService.increaseStatusWideCount(status);
     }
 

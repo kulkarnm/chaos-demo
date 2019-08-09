@@ -30,63 +30,23 @@ public class CustomActuatorMetricService implements ICustomActuatorMetricService
     // API
 
     @Override
-    public void increaseCount(final int status) {
-        String counterName = "counter.status." + status;
+    public void increaseStatusWideCount(final int status) {
+        String counterName = "ods-simulation.counter.status." + status;
         registry.counter(counterName).increment(1);
         if (!statusList.contains(counterName)) {
             statusList.add(counterName);
         }
     }
-
     @Override
-    public Object[][] getGraphData() {
-        final Date current = new Date();
-        final int colCount = statusList.size() + 1;
-        final int rowCount = statusMetricsByMinute.size() + 1;
-        final Object[][] result = new Object[rowCount][colCount];
-        result[0][0] = "Time";
+    public void increaseRequestCount(){
+        String counterName = "ods-simulation.request.counter";
+        registry.counter(counterName).increment(1);
+    }
+    @Override
+    public void captureResponseTime(long responseTimeMilli) {
+        String counterName = "ods-simulation.counter.responsetime";
+        registry.gauge(counterName,responseTimeMilli);
 
-        int j = 1;
-        for (final String status : statusList) {
-            result[0][j] = status;
-            j++;
-        }
-
-        for (int i = 1; i < rowCount; i++) {
-            result[i][0] = dateFormat.format(new Date(current.getTime() - (60000 * (rowCount - i))));
-        }
-
-        List<Integer> minuteOfStatuses;
-        for (int i = 1; i < rowCount; i++) {
-            minuteOfStatuses = statusMetricsByMinute.get(i - 1);
-            for (j = 1; j <= minuteOfStatuses.size(); j++) {
-                result[i][j] = minuteOfStatuses.get(j - 1);
-            }
-            while (j < colCount) {
-                result[i][j] = 0;
-                j++;
-            }
-        }
-        return result;
     }
 
-    // Non - API
-
-    @Scheduled(fixedDelay = 60000)
-    private void exportMetrics() {
-        final ArrayList<Integer> statusCount = new ArrayList<Integer>();
-        for (final String status : statusList) {
-            Search search = registry.find(status);
-            if (search != null) {
-/*
-                Counter counter = search.counter();
-                statusCount.add(counter != null ? ((int) counter.count()) : 0);
-                registry.remove(counter);
-*/
-            } else {
-                statusCount.add(0);
-            }
-        }
-        statusMetricsByMinute.add(statusCount);
-    }
 }

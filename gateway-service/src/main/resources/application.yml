@@ -12,8 +12,8 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
       
 ribbon:
-  ConnectTimeout: 5000
-  ReadTimeout: 5000
+  ConnectTimeout: 50000
+  ReadTimeout: 50000
   
 hystrix:
   command:

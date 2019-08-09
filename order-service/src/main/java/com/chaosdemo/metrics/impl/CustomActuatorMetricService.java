@@ -52,7 +52,7 @@ public class CustomActuatorMetricService implements ICustomActuatorMetricService
     @Override
     public void captureResponseTime(long responseTimeMilli) {
         String counterName = "order.counter.responsetime";
-        registry.counter(counterName).increment(responseTimeMilli);
+        registry.gauge(counterName,responseTimeMilli);
     }
 
 /*
