@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: ods-simulation-service
+  datasource:
+    host: localhost
+    port: 27018
+  profiles:
+    active: chaos-monkey
+      
+server:
+  port: 8094
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+  hystrix:
+    enabled: true
+
+chaos:
+  monkey:
+    enabled: false
+    assaults:
+      level: 8
+      latencyRangeStart: 1000
+      latencyRangeEnd: 10000
+      exceptionsActive: false
+      killApplicationActive: false
+    watcher:
+      repository: true
+      restController: true
+
+management:
+  endpoint:
+    chaosmonkey:
+      enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    export:
+      prometheus:
+        enabled: true
