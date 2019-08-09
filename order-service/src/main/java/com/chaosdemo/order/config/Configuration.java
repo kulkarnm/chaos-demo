@@ -35,7 +35,7 @@ public class Configuration {
                 = new FilterRegistrationBean<>();
 
         registrationBean.setFilter(new MetricsFilter());
-        registrationBean.addUrlPatterns("/*");
+        registrationBean.addUrlPatterns("/orders/*");
 
         return registrationBean;
     }

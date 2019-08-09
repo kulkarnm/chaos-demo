@@ -17,27 +17,39 @@ public class CustomActuatorMetricService implements ICustomActuatorMetricService
     @Autowired
     private MeterRegistry registry;
 
-    private final List<ArrayList<Integer>> statusMetricsByMinute;
     private final List<String> statusList;
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     public CustomActuatorMetricService() {
         super();
-        statusMetricsByMinute = new ArrayList<ArrayList<Integer>>();
         statusList = new ArrayList<String>();
     }
 
     // API
 
     @Override
-    public void increaseCount(final int status) {
-        String counterName = "counter.status." + status;
+    public void increaseStatusWideCount(final int status) {
+        String counterName = "order.counter.status." + status;
         registry.counter(counterName).increment(1);
+/*
         if (!statusList.contains(counterName)) {
             statusList.add(counterName);
         }
+*/
     }
 
+    @Override
+    public void increaseRequestCount() {
+        String counterName = "order.counter.request";
+        registry.counter(counterName).increment(1);
+/*
+        if (!statusList.contains(counterName)) {
+            statusList.add(counterName);
+        }
+*/
+    }
+
+/*
     @Override
     public Object[][] getGraphData() {
         final Date current = new Date();
@@ -78,15 +90,18 @@ public class CustomActuatorMetricService implements ICustomActuatorMetricService
         for (final String status : statusList) {
             Search search = registry.find(status);
             if (search != null) {
+*/
 /*
                 Counter counter = search.counter();
                 statusCount.add(counter != null ? ((int) counter.count()) : 0);
                 registry.remove(counter);
-*/
+*//*
+
             } else {
                 statusCount.add(0);
             }
         }
         statusMetricsByMinute.add(statusCount);
     }
+*/
 }
