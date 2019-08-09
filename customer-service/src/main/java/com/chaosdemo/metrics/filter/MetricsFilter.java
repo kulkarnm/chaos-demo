@@ -36,7 +36,6 @@ public class MetricsFilter implements Filter {
 
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws java.io.IOException, ServletException {
-        final HttpServletRequest httpRequest = ((HttpServletRequest) request);
         actMetricService.increaseRequestCount();
         chain.doFilter(request, response);
 

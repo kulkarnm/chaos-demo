@@ -30,6 +30,8 @@ public class CustomActuatorMetricService implements ICustomActuatorMetricService
     @Override
     public void increaseStatusWideCount(final int status) {
         String counterName = "customer.counter.status." + status;
+        System.out.println("()()()()response status: " + status);
+
         registry.counter(counterName).increment(1);
 /*
         if (!statusList.contains(counterName)) {

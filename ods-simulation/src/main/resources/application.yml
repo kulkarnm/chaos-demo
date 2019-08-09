@@ -15,21 +15,21 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 2000
-        readTimeout: 2000
-        loggerLevel: basic
-  hystrix:
-    command:
-      default:
-        execution:
-          isolation:
-            thread:
-              timeoutInMilliseconds: 5000
-    enabled: true
+#feign:
+#  client:
+#    config:
+#      default:
+#        connectTimeout: 2000
+#        readTimeout: 2000
+#        loggerLevel: basic
+#  hystrix:
+#    command:
+#      default:
+#        execution:
+#          isolation:
+#            thread:
+#              timeoutInMilliseconds: 5000
+#    enabled: true
 
 chaos:
   monkey:

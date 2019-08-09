@@ -3,6 +3,8 @@ package com.chaosdemo.customer.controller;
 import com.chaosdemo.feignclient.ODSCustomerClient;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +38,12 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/{id}")
-	public Customer findById(@PathVariable("id") Integer id) {
-		return odsCustomerClient.findById(id);
+	public ResponseEntity<Customer> findById(@PathVariable("id") Integer id) {
+		try {
+			return new ResponseEntity(odsCustomerClient.findById(id), HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 }

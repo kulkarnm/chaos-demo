@@ -4,6 +4,8 @@ import com.chaosdemo.ods.simulation.model.Product;
 import com.chaosdemo.ods.simulation.repository.ProductRepository;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -26,8 +28,12 @@ public class ProductODSController {
 	}
 	
 	@GetMapping("/{id}")
-	public Product findById(@PathVariable("id") Integer id) {
-		return repository.findById(id).get();
+	public ResponseEntity<Product> findById(@PathVariable("id") Integer id) {
+		try {
+			return new ResponseEntity(repository.findById(id).get(), HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@GetMapping

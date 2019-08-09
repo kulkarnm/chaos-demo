@@ -4,6 +4,8 @@ import com.chaosdemo.customer.model.Customer;
 import com.chaosdemo.customer.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +14,7 @@ public interface ODSCustomerClient {
     @PostMapping("/customers")
     public Customer add(@RequestBody Customer customer);
     @GetMapping("/customers/{id}")
-    public Customer findById(@PathVariable("id") Integer id);
+    public ResponseEntity<Customer> findById(@PathVariable("id") Integer id);
     @PutMapping("/customers")
     public Customer update(@RequestBody Customer customer);
     @Component
@@ -31,9 +33,9 @@ public interface ODSCustomerClient {
         }
 
         @GetMapping("/{id}")
-        public Customer findById(@PathVariable("id") Integer id) {
+        public ResponseEntity<Customer> findById(@PathVariable("id") Integer id) {
             System.out.println("Customer CHAOSDB--findById");
-            return repository.findById(id).get();
+            return new ResponseEntity<Customer>(repository.findById(id).get(), HttpStatus.OK);
         }
     }
 }
