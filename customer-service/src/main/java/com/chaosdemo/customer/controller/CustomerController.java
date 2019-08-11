@@ -27,14 +27,28 @@ public class CustomerController {
 	@Autowired
 	ODSCustomerClient odsCustomerClient;
 
+	@Autowired
+	CustomerRepository repository;
+
 	@PostMapping
-	public Customer add(@RequestBody Customer customer) {
-		return odsCustomerClient.add(customer);
+	public  ResponseEntity<Customer> add(@RequestBody Customer customer) {
+		try {
+			repository.save(customer);
+			return new ResponseEntity(odsCustomerClient.add(customer),HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 	
 	@PutMapping
-	public Customer update(@RequestBody Customer customer) {
-		return odsCustomerClient.update(customer);
+	public  ResponseEntity<Customer> update(@RequestBody Customer customer) {
+		try {
+			repository.save(customer);
+			return new ResponseEntity(odsCustomerClient.update(customer),HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@GetMapping("/{id}")
@@ -45,5 +59,13 @@ public class CustomerController {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
+	@GetMapping
+	public ResponseEntity<Iterable<Customer>> findAll() {
+		try {
+			return new ResponseEntity(odsCustomerClient.findAll(), HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

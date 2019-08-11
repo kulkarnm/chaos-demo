@@ -2,6 +2,7 @@ package com.chaosdemo.product.controller;
 
 import com.chaosdemo.feignclient.ODSProductClient;
 import com.chaosdemo.product.model.Product;
+import com.chaosdemo.product.repository.ProductRepository;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,14 +17,31 @@ public class ProductController {
     @Autowired
     ODSProductClient odsProductClient;
 
+    @Autowired
+    ProductRepository repository;
+
     @PostMapping
-    public Product add(@RequestBody Product product) {
-        return odsProductClient.add(product);
+    public ResponseEntity<Product> add(@RequestBody Product product) {
+        Product product1 = null;
+        try {
+            repository.save(product);
+            product1 = odsProductClient.add(product);
+            return new ResponseEntity(product1,HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping
-    public Product update(@RequestBody Product product) {
-        return odsProductClient.add(product);
+    public ResponseEntity<Product> update(@RequestBody Product product) {
+        Product product1 = null;
+        try {
+            repository.save(product);
+            product1 = odsProductClient.add(product);
+            return new ResponseEntity(product1,HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{id}")
@@ -36,8 +54,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public Iterable<Product> findAll() {
-        return odsProductClient.findAll();
+    public ResponseEntity<Iterable<Product>> findAll() {
+        Iterable<Product> products = null;
+        try {
+            products= odsProductClient.findAll();
+            return new ResponseEntity(products,HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

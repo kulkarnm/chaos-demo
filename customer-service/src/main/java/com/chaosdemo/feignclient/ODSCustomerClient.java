@@ -14,7 +14,10 @@ public interface ODSCustomerClient {
     @PostMapping("/customers")
     public Customer add(@RequestBody Customer customer);
     @GetMapping("/customers/{id}")
-    public ResponseEntity<Customer> findById(@PathVariable("id") Integer id);
+    public Customer findById(@PathVariable("id") Integer id);
+    @GetMapping
+    public Iterable<Customer> findAll();
+
     @PutMapping("/customers")
     public Customer update(@RequestBody Customer customer);
     @Component
@@ -33,9 +36,14 @@ public interface ODSCustomerClient {
         }
 
         @GetMapping("/{id}")
-        public ResponseEntity<Customer> findById(@PathVariable("id") Integer id) {
+        public Customer findById(@PathVariable("id") Integer id) {
             System.out.println("Customer CHAOSDB--findById");
-            return new ResponseEntity<Customer>(repository.findById(id).get(), HttpStatus.OK);
+            return repository.findById(id).get();
+        }
+
+        @GetMapping
+        public Iterable<Customer> findAll() {
+           return repository.findAll();
         }
     }
 }

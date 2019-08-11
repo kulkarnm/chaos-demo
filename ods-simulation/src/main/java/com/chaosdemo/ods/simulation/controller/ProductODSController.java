@@ -18,13 +18,23 @@ public class ProductODSController {
 	ProductRepository repository;
 	
 	@PostMapping
-	public Product add(@RequestBody Product product) {
-		return repository.save(product);
+	public ResponseEntity<Product> add(@RequestBody Product product) {
+		try {
+			repository.save(product);
+			return new ResponseEntity(product, HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@PutMapping
-	public Product update(@RequestBody Product product) {
-		return repository.save(product);
+	public ResponseEntity<Product> update(@RequestBody Product product) {
+		try {
+			repository.save(product);
+			return new ResponseEntity(product, HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@GetMapping("/{id}")
@@ -37,8 +47,12 @@ public class ProductODSController {
 	}
 	
 	@GetMapping
-	public Iterable<Product> findAll() {
-		return repository.findAll();
+	public ResponseEntity<Iterable<Product>> findAll() {
+		try {
+			return new ResponseEntity(repository.findAll(), HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 }

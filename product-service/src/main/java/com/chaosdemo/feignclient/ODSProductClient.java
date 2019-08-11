@@ -14,7 +14,8 @@ public interface ODSProductClient {
     @PostMapping("/products")
     public Product add(@RequestBody Product product);
     @GetMapping("/products/{id}")
-    public ResponseEntity<Product> findById(@PathVariable("id") Integer id);
+    public Product findById(@PathVariable("id") Integer id);
+
     @PutMapping("/products")
     public Product update(@RequestBody Product product);
     @GetMapping
@@ -36,9 +37,8 @@ public interface ODSProductClient {
         }
 
         @GetMapping("/{id}")
-        public ResponseEntity<Product> findById(@PathVariable("id") Integer id) {
-
-            return new ResponseEntity<Product>(repository.findById(id).get(), HttpStatus.OK);
+        public Product findById(@PathVariable("id") Integer id) {
+            return repository.findById(id).get();
         }
 
         @GetMapping

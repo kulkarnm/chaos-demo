@@ -19,13 +19,21 @@ public class CustomerODSController {
     CustomerRepository repository;
 
     @PostMapping
-    public Customer add(@RequestBody Customer customer) {
-        return repository.save(customer);
+    public ResponseEntity<Customer> add(@RequestBody Customer customer) {
+        try {
+            return new ResponseEntity(repository.save(customer),HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping
-    public Customer update(@RequestBody Customer customer) {
-        return repository.save(customer);
+    public ResponseEntity<Customer> update(@RequestBody Customer customer) {
+        try {
+            return new ResponseEntity(repository.save(customer),HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{id}")
@@ -38,5 +46,12 @@ public class CustomerODSController {
         }
     }
 
-
+    @GetMapping
+    public ResponseEntity<Iterable<Customer>> findAll() {
+        try {
+            return new ResponseEntity(repository.findAll(), HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 } 
