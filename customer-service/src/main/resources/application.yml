@@ -6,7 +6,9 @@ spring:
     port: 27017
   profiles:
     active: chaos-monkey
-      
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
 server:
   port: 8093
 
