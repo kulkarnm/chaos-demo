@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
 @Timed(value = "Product")
@@ -30,6 +32,20 @@ public class ProductController {
         }catch(Exception ex){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/all")
+    public  ResponseEntity<List<Product>> add(@RequestBody List<Product> products) {
+        try {
+            for(Product c: products) {
+                repository.save(c);
+                odsProductClient.add(c);
+            }
+            return new ResponseEntity(products,HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @PutMapping

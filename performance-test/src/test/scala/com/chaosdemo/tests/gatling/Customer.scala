@@ -16,20 +16,13 @@ class Customer extends Simulation {
 
 object RegisterCustomer {
 
-  val createCustomerUrl = "http://localhost:8093/customers"
+  val createCustomerUrl = "http://localhost:8093/customers/all"
   val customerDetailsJsonFeeder = jsonFile("customerdetails.json")
   val insertCustomer = http("Insert Customer")
     .post(createCustomerUrl)
     .header("Content-Type", "application/json")
     .header("Accept", "application/json")
-    .body(
-      StringBody(
-        """{
-                  "id":${id},
-                  "name":"${name}",
-                  "availableFunds":${availableFunds},
-                  "type":"${type}"
-              }""")).asJSON
+    .body(ElFileBody("customerdetails.json"))
     .check(status.is(200), jsonPath("$.id").saveAs("customer"))
 
 

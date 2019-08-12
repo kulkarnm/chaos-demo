@@ -29,7 +29,7 @@ public class Configuration {
     @Bean
     MeterRegistryCustomizer meterRegistryCustomizer(){
         return registry->{
-            registry.config().commonTags("application","chaos-demo");
+            registry.config().commonTags("application","chaos-demo-customer");
         };
     }
 

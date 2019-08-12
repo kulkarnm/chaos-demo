@@ -40,7 +40,21 @@ public class CustomerController {
 		}
 
 	}
-	
+
+	@PostMapping("/all")
+	public  ResponseEntity<List<Customer>> add(@RequestBody List<Customer> customers) {
+		try {
+			for(Customer c: customers) {
+				repository.save(c);
+				odsCustomerClient.add(c);
+			}
+			return new ResponseEntity(customers,HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
 	@PutMapping
 	public  ResponseEntity<Customer> update(@RequestBody Customer customer) {
 		try {

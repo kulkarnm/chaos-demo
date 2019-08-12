@@ -21,8 +21,8 @@ feign:
   client:
     config:
       default:
-        connectTimeout: 2000
-        readTimeout: 2000
+        connectTimeout: 1000
+        readTimeout: 1000
         loggerLevel: basic
   hystrix:
     command:
@@ -34,12 +34,12 @@ feign:
     enabled: false
 
 ribbon:
-  ConnectTimeout: 2000
-  ReadTimeout: 2000
+  ConnectTimeout: 1000
+  ReadTimeout: 1000
 
 chaos:
   monkey:
-    enabled: true
+    enabled: false
     assaults:
       level: 7
       latencyRangeStart: 1000

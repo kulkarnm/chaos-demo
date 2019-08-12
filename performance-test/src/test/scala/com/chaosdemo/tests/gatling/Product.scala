@@ -16,28 +16,17 @@ class Product extends Simulation {
 
 object RegisterProduct {
 
-  val createProductUrl = "http://localhost:8092/products"
+  val createProductUrl = "http://localhost:8092/products/all"
 
-  val productDetailsJsonFeeder = jsonFile("productdetails.json").circular
+  val productDetailsJsonFeeder = jsonFile("productdetails.json")
 
   val registerProduct = feed(productDetailsJsonFeeder)
     .exec(
       http("Insert Product")
         .post(createProductUrl)
         .header("Content-Type", "application/json")
-        .body(
-          StringBody(
-            """
-              |{
-              |    "id":"${id}",
-              |    "name":"${name}",
-              |    "count":"${count}",
-              |    "price":"${price}",
-              |    "category":"${category}"
-              |}
-            """.stripMargin
-          )
-        ).asJSON
+        .body(ElFileBody("productdetails.json"))
+        .asJSON
         .check(status.is(200), jsonPath("$.id").saveAs("productId"))
     )
 }
