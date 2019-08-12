@@ -11,8 +11,7 @@ import scala.util.Random
 
 class Product extends Simulation {
   var productscn = scenario("Insert Product").exec(RegisterProduct.registerProduct).pause(30)
-  var productODSscn = scenario("Insert Product ODS").exec(RegisterProductODS.registerProductODS).pause(30)
-  setUp(productscn.inject(atOnceUsers(1)).protocols(http),productODSscn.inject(atOnceUsers(1)).protocols(http))
+  setUp(productscn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object RegisterProduct {
@@ -43,6 +42,7 @@ object RegisterProduct {
     )
 }
 
+/*
 object RegisterProductODS {
 
   val createProductODSUrl = "http://localhost:8094/products"
@@ -70,3 +70,4 @@ object RegisterProductODS {
         .check(status.is(200), jsonPath("$.id").saveAs("productId"))
     )
 }
+*/

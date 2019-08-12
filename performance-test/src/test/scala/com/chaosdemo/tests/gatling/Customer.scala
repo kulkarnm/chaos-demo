@@ -11,14 +11,13 @@ import scala.util.Random
 
 class Customer extends Simulation {
   var customerscn = scenario("Insert Customer").exec(RegisterCustomer.registerCustomer).pause(30)
-  var customerODSscn = scenario("Insert Customer ODS").exec(RegisterCustomerODS.registerCustomerODS).pause(30)
-  setUp(customerscn.inject(atOnceUsers(1)).protocols(http),customerODSscn.inject(atOnceUsers(1)).protocols(http))
+  setUp(customerscn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object RegisterCustomer {
 
   val createCustomerUrl = "http://localhost:8093/customers"
-  val customerDetailsJsonFeeder = jsonFile("customerdetails.json").circular
+  val customerDetailsJsonFeeder = jsonFile("customerdetails.json")
   val insertCustomer = http("Insert Customer")
     .post(createCustomerUrl)
     .header("Content-Type", "application/json")
@@ -37,10 +36,11 @@ object RegisterCustomer {
   val registerCustomer = scenario("Register Customer Feed").feed(RegisterCustomer.customerDetailsJsonFeeder)
     .exec(RegisterCustomer.insertCustomer).exitHereIfFailed
 }
+/*
 object RegisterCustomerODS {
 
   val createCustomerODSUrl = "http://localhost:8094/customers"
-  val customerDetailsJsonFeeder = jsonFile("customerdetails.json").circular
+  val customerDetailsJsonFeeder = jsonFile("customerdetails.json")
 
 
   val registerCustomerODS = feed(customerDetailsJsonFeeder)
@@ -62,4 +62,4 @@ object RegisterCustomerODS {
         ).asJSON
         .check(status.is(200), jsonPath("$.id").saveAs("customerODS"))
     )
-}
+}*/

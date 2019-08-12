@@ -39,7 +39,7 @@ ribbon:
 
 chaos:
   monkey:
-    enabled: false
+    enabled: true
     assaults:
       level: 8
       latencyRangeStart: 1000
