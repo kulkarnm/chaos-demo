@@ -1,5 +1,6 @@
 package com.chaosdemo.ods.simulation.controller;
 
+import com.chaosdemo.metrics.impl.ICustomActuatorMetricService;
 import com.chaosdemo.ods.simulation.model.Customer;
 import com.chaosdemo.ods.simulation.repository.CustomerRepository;
 import io.micrometer.core.annotation.Timed;
@@ -17,6 +18,9 @@ public class CustomerODSController {
 
     @Autowired
     CustomerRepository repository;
+
+    @Autowired
+    ICustomActuatorMetricService metricService;
 
     @PostMapping
     public ResponseEntity<Customer> add(@RequestBody Customer customer) {
@@ -54,4 +58,15 @@ public class CustomerODSController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/clearreg")
+    public ResponseEntity<Void> clearRegistry() {
+        try {
+            metricService.clearRegistry();
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 } 

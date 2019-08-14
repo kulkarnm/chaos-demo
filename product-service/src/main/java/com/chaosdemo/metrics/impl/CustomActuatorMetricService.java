@@ -58,6 +58,11 @@ public class CustomActuatorMetricService implements ICustomActuatorMetricService
         registry.gauge(counterName,responseTimeMilli);
     }
 
+    @Override
+    public void clearRegistry() {
+        registry.clear();
+    }
+
 
 /*
     @Override

@@ -1,8 +1,11 @@
 package com.chaosdemo.product.controller;
 
 import com.chaosdemo.feignclient.ODSProductClient;
+import com.chaosdemo.metrics.impl.IActuatorMetricService;
+import com.chaosdemo.metrics.impl.ICustomActuatorMetricService;
 import com.chaosdemo.product.model.Product;
 import com.chaosdemo.product.repository.ProductRepository;
+import com.netflix.ribbon.proxy.annotation.Http;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,9 @@ public class ProductController {
 
     @Autowired
     ProductRepository repository;
+
+    @Autowired
+    ICustomActuatorMetricService metricService;
 
     @PostMapping
     public ResponseEntity<Product> add(@RequestBody Product product) {
@@ -80,4 +86,13 @@ public class ProductController {
         }
     }
 
+    @PostMapping("/clearreg")
+    public ResponseEntity<Void> clearRegistry() {
+        try {
+            metricService.clearRegistry();
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

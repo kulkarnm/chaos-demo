@@ -21,11 +21,12 @@ chaos:
   monkey:
     enabled: true
     assaults:
-      level: 3
+      level: 1
       latencyRangeStart: 2000
       latencyRangeEnd: 5000
       exceptionsActive: false
       killApplicationActive: false
+      proxyTargetClass: false
     watcher:
       repository: true
       restController: true

@@ -49,4 +49,9 @@ public class CustomActuatorMetricService implements ICustomActuatorMetricService
 
     }
 
+    @Override
+    public void clearRegistry() {
+        registry.clear();
+    }
+
 }
