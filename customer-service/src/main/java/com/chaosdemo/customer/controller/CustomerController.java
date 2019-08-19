@@ -1,6 +1,7 @@
 package com.chaosdemo.customer.controller;
 
 import com.chaosdemo.feignclient.ODSCustomerClient;
+import com.chaosdemo.metrics.impl.ICustomActuatorMetricService;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,9 @@ public class CustomerController {
 
 	@Autowired
 	CustomerRepository repository;
+
+	@Autowired
+	ICustomActuatorMetricService metricService;
 
 	@PostMapping
 	public  ResponseEntity<Customer> add(@RequestBody Customer customer) {
@@ -82,4 +86,15 @@ public class CustomerController {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	@PostMapping("/clearreg")
+	public ResponseEntity<Void> clearRegistry() {
+		try {
+			metricService.clearRegistry();
+			return new ResponseEntity<>(HttpStatus.OK);
+		}catch(Exception ex){
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

@@ -5,4 +5,5 @@ public interface ICustomActuatorMetricService {
         void increaseRequestCount();
        // Object[][] getGraphData();
        public void captureResponseTime(long responseTimeMilli);
+        void clearRegistry();
 }
