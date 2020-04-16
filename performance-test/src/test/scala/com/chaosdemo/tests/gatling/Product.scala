@@ -26,7 +26,7 @@ object RegisterProduct {
         .post(createProductUrl)
         .header("Content-Type", "application/json")
         .body(ElFileBody("productdetails.json"))
-        .asJSON
+        .asJson
         .check(status.is(200), jsonPath("$.id").saveAs("productId"))
     )
 }
