@@ -45,7 +45,6 @@
                             </args>
                         </configuration>
                     </execution>
-
                 </executions>
                 <configuration>
                     <scalaVersion>2.11.8</scalaVersion>

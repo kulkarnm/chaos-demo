@@ -19,7 +19,7 @@ eureka:
 
 chaos:
   monkey:
-    enabled: true
+    enabled: false
     assaults:
       level: 1
       latencyRangeStart: 2000

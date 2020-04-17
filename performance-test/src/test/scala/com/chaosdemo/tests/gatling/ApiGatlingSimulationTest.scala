@@ -46,5 +46,5 @@ class ApiGatlingSimulationTest extends Simulation {
         )
   }
 
-  setUp(scn.inject(rampUsers(100).during(120))).maxDuration(FiniteDuration.apply(10, "minutes"))
+  setUp(scn.inject(rampUsers(20).during(240))).maxDuration(FiniteDuration.apply(10, "minutes"))
 }
